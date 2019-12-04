@@ -1,0 +1,45 @@
+{
+  "name": "nodetestocr",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.6.3",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "mongoose": "^5.7.13",
+    "morgan": "~1.9.1",
+    "node-tesseract-ocr": "^1.0.0",
+    "validator": "^11.1.0",
+    "body-parser": "latest"
+  },
+  "scripts": {
+    "start_dev": "NODE_ENV=development nodemon --exec babel-node ./src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./dist",
+    "build": "babel src -d dist",
+    "start": "NODE_ENV=production node ./dist",
+    "push_heroku": "git push heroku master"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "nodemon": "^1.19.4"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "watch": [
+      "src/*"
+    ],
+    "ext": "js, json",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ]
+  }
+}
