@@ -16,22 +16,14 @@ dotEnv.config();
 
 const {PORT, MONGODB_URI} = process.env;
 const port = PORT || 5000;
-const mongodb_uri = MONGODB_URI ;
+const mongodb_uri = MONGODB_URI || 'mongodb://localhost:27017/ocr' ;
 console.log('mongodb_uri',mongodb_uri);
-//const mongodb_uri =   'mongodb://localhost:27017/ocr';
 
 const app = express();
 const debugApp = debug('app');
-// app.options("/*", function (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-//     res.sendStatus(200);
-// });
 
 /**
  * connecting to mongodb
- * run mongodb (OS X terminal): mongod
  */
 mongoose.connect(
     mongodb_uri,

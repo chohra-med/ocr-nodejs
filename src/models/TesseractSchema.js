@@ -1,7 +1,7 @@
 import mongoose, {Schema} from 'mongoose';
-// import validator from 'validator';
 
 
+//The schema of Tesseract needed for this test
 const TesseractSchema = new Schema({
 
     imageName: {

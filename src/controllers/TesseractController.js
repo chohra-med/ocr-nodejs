@@ -9,7 +9,9 @@ const config = {
 //Function to get text from Image
 export const getTextFromImage = (req, res, next) => {
 
+    //Put the image name here and put the image in Images Folder
     let imageName = 'image';
+
     tesseract.recognize(process.cwd() + '/src/images/'+imageName + '.png', config)
         .then(text => {
             console.log("Result:", text);
@@ -25,6 +27,7 @@ export const getTextFromImage = (req, res, next) => {
             next(e)
         });
 };
+
 //To get all the images
 export const getAllImages = (req, res, next) => {
     Tesseract.find().then(images => {
@@ -59,11 +62,11 @@ export const getTextFromImageWithImageName = (req, res, next) => {
     }
 };
 
-//delete an image by name
+//delete an image by name send in Body
 export const deleteImageByName = (req, res, next) => {
     let {
         imageName
-    } = req.params;
+    } = req.body;
     if (imageName) {
         Tesseract.findOneAndDelete({imageName: imageName}).then(deletedImage => {
             res.json(deletedImage);
