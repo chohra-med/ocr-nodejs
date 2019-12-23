@@ -12,9 +12,8 @@ export const getTextFromImage = (req, res, next) => {
     //Put the image name here and put the image in Images Folder
     let imageName = 'image';
 
-    tesseract.recognize(process.cwd() + '/src/images/'+imageName + '.png', config)
+    tesseract.recognize(process.cwd() + '/src/images/' + imageName + '.png', config)
         .then(text => {
-            console.log("Result:", text);
             let newTesseract = new Tesseract({
                 imageName: imageName,
                 text: text,
@@ -30,9 +29,13 @@ export const getTextFromImage = (req, res, next) => {
 
 //To get all the images
 export const getAllImages = (req, res, next) => {
-    Tesseract.find().then(images => {
-        res.json(images);
-    }).catch(e => next(e));
+    try {
+        Tesseract.find().then(images => {
+            res.json(images);
+        }).catch(e => next(e));
+    } catch (e) {
+        console.log('error', e);
+    }
 
 };
 
@@ -42,20 +45,25 @@ export const getTextFromImageWithImageName = (req, res, next) => {
         imageName
     } = req.body;
     if (imageName) {
-        tesseract.recognize(__dirname +'../images/'+ imageName + '.png', config)
-            .then(text => {
-                console.log("Result:", text);
-                let newTesseract = new Tesseract({
-                    imageName: imageName,
-                    text: text,
+        try {
+            tesseract.recognize(__dirname + '../images/' + imageName + '.png', config)
+                .then(text => {
+                    console.log("Result:", text);
+                    let newTesseract = new Tesseract({
+                        imageName: imageName,
+                        text: text,
+                    });
+
+                    newTesseract.save().then(result => {
+                        res.json(result);
+                    }).catch(e => next(e));
+                })
+                .catch(e => {
+                    next(e)
                 });
-                newTesseract.save().then(result => {
-                    res.json(result);
-                }).catch(e => next(e));
-            })
-            .catch(e => {
-                next(e)
-            });
+        } catch (e) {
+            console.log('error', e);
+        }
 
     } else {
         res.status(404).send('no image found');

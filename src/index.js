@@ -14,10 +14,9 @@ import TesseractRoutes from "./routes/TesseractRoutes";
 
 dotEnv.config();
 
-const {PORT, MONGODB_URI} = process.env;
+const {PORT} = process.env;
 const port = PORT || 5000;
-const mongodb_uri = MONGODB_URI || 'mongodb://localhost:27017/ocr' ;
-console.log('mongodb_uri',mongodb_uri);
+const mongodb_uri =  'mongodb://localhost:27017/ocr' ;
 
 const app = express();
 const debugApp = debug('app');
